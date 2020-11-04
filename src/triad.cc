@@ -58,17 +58,17 @@ void logspace(std::vector<int>& v, int a, int b, int n)
 
 int main()
 {
-  const double max_time = 0.125; // seconds
+  const double max_time = 0.5; // seconds
   FILE* fh = fopen ("triad.txt","w");
   std::vector<int> nvals;
-  logspace(nvals, 3, 7, 100);
+  logspace(nvals, 3, 7, 500);
   for (int i = 0; i < nvals.size(); ++i)
   {
     int n = nvals[i];
     Triad triad(n);
     double te = 0.0;
     int c = 0;
-    while (te < max_time)
+    while (te < max_time and c < 10000)
     {
       double t0 = time();
       triad.run();
@@ -76,7 +76,7 @@ int main()
       c += 1;
     }
     double gflops = (double)n*(double)c*2.0/1.0e9/te;
-    std::printf("%8i %6.2e %6.2e\n", n, (double)c, gflops);
+    //std::printf("%8i %6.2e %6.2e\n", n, (double)c, gflops);
     std::fprintf(fh, "%8i %6.2e %6.2e\n", n, (double)c, gflops);
   }
   std::fclose(fh);
